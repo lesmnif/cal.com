@@ -1,8 +1,8 @@
 const webpack = require("webpack");
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
-const srcDir = path.join(__dirname, "..", "src");
-
+const srcDir = path.join(__dirname, "..", "components");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 module.exports = {
   entry: {
     popup: path.join(srcDir, "popup.tsx"),
@@ -26,18 +26,24 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        loader: "ts-loader",
         exclude: /node_modules/,
+        options: { transpileOnly: true, allowTsInNodeModules: true },
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", { loader: "css-loader", options: { importLoaders: 1 } }, "postcss-loader"],
       },
     ],
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"],
+    extensions: [".ts", ".tsx", ".js", ".css"],
   },
   plugins: [
     new CopyPlugin({
       patterns: [{ from: ".", to: "../", context: "public" }],
       options: {},
     }),
+    new NodePolyfillPlugin(),
   ],
 };

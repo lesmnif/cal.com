@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "Cal Sans";
+    src: url("/public/fonts/cal.ttf");
+  }
+
+  @font-face {
+    font-family: "Inter var";
+    font-weight: 100 900;
+    font-display: swap;
+    font-style: normal;
+    font-named-instance: "Regular";
+    src: url("/public/fonts/Inter-roman.var.woff2") format("woff2");
+  }
